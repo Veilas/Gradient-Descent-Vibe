@@ -1,5 +1,5 @@
 
-function [a1, T1, r1, a2, T2, r2] = viber(Q, b)
+function [a1, T1, r1, a2, T2, r2] = vibe(Q, b)
 
 
 % if b was not passed in, set it to a default value
@@ -9,13 +9,13 @@ end
 
 
 % Parameters
-max_iterations = 10000;
-gamma = 0.001;
+max_iterations = 5000;
+gamma = 0.01;
 deltat = 0.1;
 THRESHOLD = 0.001;
 
-T = length(Q); 
-t = 1:deltat:((T-1)*deltat + 1);
+T = length(Q)*deltat; 
+t = 1:deltat:(T + 1 - deltat);
 
 Qtot = trapz(t,Q);
 
@@ -44,12 +44,10 @@ for iter = 1:max_iterations
     
     A2 = r2*exp(-b* (t./T2).^a2);
     B2 = (t./T2).^(a2 - 1);
-    C2 = a1* b./T2;
+    C2 = a2* b./T2;
 
     
-    
-    
-    dQ = Qtot * (A1.*B1*C1 + A2.*B2*C2);
+    dQ = Qtot*A1.*B1*C1 + Qtot*A2.*B2*C2;
     
     da1 = A1.*B1.*(C1.*log10(t./T1).*(b*(t./T1).^a1 + 1) + b./T1);
     dT1 = A1.*B1.*C1.*(t.*B1.*C1 - a1)./T1;
