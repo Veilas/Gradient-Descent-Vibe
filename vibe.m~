@@ -28,19 +28,6 @@ deltaQ = Q;
 [val, imax] = max(deltaQ);
 %deltaQ = [0 , diff(Q)];
 
-ki = ones(1, length(Q));
-for i = 1:length(ki)
-    if i == imax 
-        ki(i) = 16;
-    elseif i > imax + 4
-        ki(i) = 1;
-    elseif i < imax - 4
-        ki(i) = 1;
-    else
-        ki(i) = (4.0/abs(i - imax))^2;
-    end
-end
-
 for iter = 1:max_iterations
 
     a1 = points(1);
@@ -77,11 +64,14 @@ for iter = 1:max_iterations
     dw = [da1; dT1; dr1; da2; dT2; dr2];
     
     gradient = [0, 0, 0, 0, 0, 0];
-
+    k1 = ones(1,length(Q));
+    
     for k = 1:6
         dFdw = 0;
         for i = 1:length(Q)
-            dFdw = dFdw + ki(i)*(deltaQ(i) - dQ(i)) * dw(k,i);
+            
+            dFdw = dFdw + ki*(deltaQ(i) - dQ(i)) * dw(k,i);
+            
         end
         gradient(k) = -2*dFdw;
         
