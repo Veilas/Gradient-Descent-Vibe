@@ -1,17 +1,26 @@
 # Double Wiebe Superpostion using Gradient Descent
-Matlab code for approximating heat release of a disel engine given by exprimental data using the sum of two wiebe functions which parameters are deterimend by gradinet descent.
+Matlab code for approximating difference in heat released of a disel engine given by exprimental data using the sum of two wiebe functions which parameters are deterimend by gradinet descent.
 
+```matlab
+%Short version
+data = wiebe(dQ)
 
+%Long version
+[data, Qtot] = wiebe(dQ, b, deltat)
+```
 ### Input
 #### Required:
-- dQ - represents experimantal data of heat release of a disel engine as data points
+- dQ - represents experimantal data of the difference in heat released of a disel engine as data points
 
 #### Optional:
 - b - maximum heat released - default: 6.908 
 - deltat - time step used for sampling of experimental data - default: 0.1
 
 ### Output:
-- [a1, T1, r1, a2, T2, r2]
+- data - row vector containting 6 elements: a<sub>1</sub>, T<sub>1</sub>, r<sub>1</sub>, a<sub>2</sub>, T<sub>2</sub>, <sub>3</sub>
+- Qtot - total heat relesed 
 
-Plot of sample input:
+Plot of sample input (dQ)
+
+![Screenshot](Example/sample_plot.png)
 
