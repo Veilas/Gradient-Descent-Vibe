@@ -5,7 +5,8 @@ Matlab code for approximating heat release of a disel engine given by exprimenta
 # Input
 Required:
 - dQ - represents experimantal data of heat release of a disel engine as data points
-Optinal:
+
+Optional:
 - b - maximum heat released - default: 6.908 
 - deltat - time step used for sampling of experimental data - default: 0.1
 
