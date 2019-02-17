@@ -1,4 +1,4 @@
-# Gradient-Descent-Wiebe
+# Double Wiebe Superpostion using Gradient Descent
 Matlab code for approximating heat release of a disel engine given by exprimental data using the sum of two wiebe functions which parameters are deterimend by gradinet descent.
 
 
