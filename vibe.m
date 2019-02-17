@@ -79,12 +79,8 @@ for iter = 1:max_iterations
     gradient = [0, 0, 0, 0, 0, 0];
 
     for k = 1:6
-        dFdw = 0;
-        for i = 1:length(Q)
-            dFdw = dFdw + ki(i)*(deltaQ(i) - dQ(i)) * dw(k,i);
-        end
-        gradient(k) = -2*dFdw;
-        
+        dFdw = ki.*(deltaQ - dQ).* dw(k,:);
+        gradient(k) = -2*sum(dFdw);
     end
    
     points = points - gamma * gradient./norm(gradient);
