@@ -1,16 +1,19 @@
 
-function [points, Qtot] = vibe(Q, b)
+function [points, Qtot] = wiebe(Q, b, deltat)
 
+Q = Q';
 % if b was not passed in, set it to a default value
 if nargin == 1
     b = 6.908;
+    deltat = 1;
 end
-
+if nargin == 2
+    deltat = 1;
+end
 
 % Parameters
 max_iterations = 50000;
 gamma = 0.001;
-deltat = 0.1;
 THRESHOLD = 1e-4;
 
 T = length(Q)*deltat;
@@ -82,8 +85,13 @@ for iter = 1:max_iterations
         dFdw = ki.*(deltaQ - dQ).* dw(k,:);
         gradient(k) = -2*sum(dFdw);
     end
-   
-    points = points - gamma * gradient./norm(gradient);
+    magniude = norm(gradient);
+    
+    if magniude < 1
+        magniude = 1;
+    end
+    
+    points = points - gamma * gradient./magniude;
     
 end
 points = points;
