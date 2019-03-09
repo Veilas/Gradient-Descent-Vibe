@@ -14,8 +14,8 @@ derivt = 1:T-1;
 
 results = zeros(8, width);
 for k = 1:width
-    deltaQ = (xlsdata(:, k));
-    deltaQ = deltaQ(~isnan(deltaQ));
+    data = (xlsdata(:, k));
+    deltaQ = data(~isnan(data));
     [parameters, Qtot] = doublewiebe(deltaQ);
     a1 = parameters(1);
     T1 = parameters(2);
@@ -27,7 +27,9 @@ for k = 1:width
     results(:, k) = [a1; T1; r1; a2; T2; r2; a; Qtot]; 
 end
 
-xlswrite('result.xls',results,'parametri');
+
+outputfilepath = 'result.xls'; 
+xlswrite(outputfilepath, results,'parametri');
 
 
 for k = 1:width
@@ -62,7 +64,7 @@ for k = 1:width
     dQ2 = Qtot.*A2.*B2.*C2;
     
     formatedData = [t' column dQ1' dQ2' (dQ1 + dQ2)' dQ'];
-    xlswrite('result.xls',formatedData ,k + 1);
+    xlswrite(outputfilepath, formatedData, strcat(num2str(k*10), '%'));
 end
 
 

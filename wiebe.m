@@ -11,7 +11,7 @@ if nargin == 2
 end
 
 % Parameters
-max_iterations = 5000;
+max_iterations = 50000;
 gamma = 0.001;
 THRESHOLD = 1e-4;
 
