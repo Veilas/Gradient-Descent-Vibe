@@ -35,7 +35,8 @@ xlswrite(outputfilepath, results,'parametri');
 for k = 1:width
     data = xlsdata(:, k);
     column = data(~isnan(data));
-    t = 1:length(column');
+    T = length(column');
+    t = 1:T;
     
     rez = results(:, k)';
     a1 = rez(1);
@@ -60,6 +61,7 @@ for k = 1:width
     C = a* b/T;
     
     dQ = Qtot.*A.*B.*C;
+    
     dQ1 = Qtot.*A1.*B1.*C1;
     dQ2 = Qtot.*A2.*B2.*C2;
     
