@@ -66,6 +66,7 @@ for k = 1:width
     dQ1 = Qtot.*A1.*B1.*C1;
     dQ2 = Qtot.*A2.*B2.*C2;
     
+    t = 0:(T -1);
     formatedData = [t' column dQ1' dQ2' (dQ1 + dQ2)' dQ'];
     xlswrite(outputfilepath, formatedData, strcat(num2str(k*10), '%'));
 end
