@@ -1,34 +1,33 @@
-
-
-
-
-filepath = 'proba.xlsx';
+filepath = 'ulazni_podaci/HRR_2000.xlsx';
 b = 6.908;
 
 xlsdata = xlsread(filepath);
 
 [T, width] = size(xlsdata);
-width = 1;
+%width=1;
 t = 1:T;
 derivt = 1:T-1;
 
-results = zeros(8, width);
+results = zeros(10, width);
 for k = 1:width
     data = (xlsdata(:, k));
     deltaQ = data(~isnan(data));
-    [parameters, Qtot] = doublewiebe(deltaQ);
-    a1 = parameters(1);
-    T1 = parameters(2);
-    r1 = parameters(3);
-    a2 = parameters(4);
-    T2 = parameters(5);
-    r2 = parameters(6);
-    [a, b] = wiebe(deltaQ);
-    results(:, k) = [a1; T1; r1; a2; T2; r2; a; Qtot]; 
+    [parameters1, Qtot] = doublewiebe(deltaQ);
+    [parameters2] = wiebe(deltaQ);
+    a1 = parameters1(1);
+    T1 = parameters1(2);
+    r1 = parameters1(3);
+    a2 = parameters1(4);
+    T2 = parameters1(5);
+    r2 = parameters1(6);
+    a  = parameters2(1);
+    T  = parameters2(2);
+    r  = parameters2(3);
+    results(:, k) = [a1; T1; r1; a2; T2; r2; a; T; r; Qtot]; 
 end
 
 
-outputfilepath = 'result.xls'; 
+outputfilepath = 'rezultati/wiebe_2000.xls'; 
 xlswrite(outputfilepath, results,'parametri');
 
 
@@ -46,7 +45,9 @@ for k = 1:width
     T2 = rez(5);
     r2 = rez(6);
     a = rez(7);
-    Qtot = rez(8);
+    T = rez(8);
+    r = rez(9);
+    Qtot = rez(10);
 
     A1 = r1*exp(-b*(t./T1).^a1);
     B1 = (t./T1).^(a1 - 1);
@@ -56,7 +57,7 @@ for k = 1:width
     B2 = (t./T2).^(a2 - 1);
     C2 = a2* b/T2;
    
-    A = exp(-b*(t./T).^a);
+    A = r*exp(-b* (t./T).^a);
     B = (t./T).^(a - 1);
     C = a* b/T;
     
