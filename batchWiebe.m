@@ -1,10 +1,12 @@
-filepath = 'ulazni_podaci/HRR_2000.xlsx';
+inputfilepath = 'Example/data.xlsx';
+outputfilepath = 'result.xls'; 
+
 b = 6.908;
 
-xlsdata = xlsread(filepath);
+xlsdata = xlsread(inputfilepath);
 
 [T, width] = size(xlsdata);
-%width=1;
+width=1;
 t = 1:T;
 derivt = 1:T-1;
 
@@ -12,6 +14,7 @@ results = zeros(10, width);
 for k = 1:width
     data = (xlsdata(:, k));
     deltaQ = data(~isnan(data));
+    deltaQ = deltaQ(2:end);
     [parameters1, Qtot] = doublewiebe(deltaQ);
     [parameters2] = wiebe(deltaQ);
     a1 = parameters1(1);
@@ -27,7 +30,6 @@ for k = 1:width
 end
 
 
-outputfilepath = 'rezultati/wiebe_2000.xls'; 
 xlswrite(outputfilepath, results,'parametri');
 
 
@@ -66,7 +68,12 @@ for k = 1:width
     dQ1 = Qtot.*A1.*B1.*C1;
     dQ2 = Qtot.*A2.*B2.*C2;
     
-    t = 0:(T -1);
+    t = 0:length(column');
+    dQ1 = [0 dQ1];
+    dQ2 = [0 dQ2];
+    dQ = [0 dQ];
+    column = [0; column];
+    
     formatedData = [t' column dQ1' dQ2' (dQ1 + dQ2)' dQ'];
     xlswrite(outputfilepath, formatedData, strcat(num2str(k*10), '%'));
 end
